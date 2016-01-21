@@ -1,5 +1,6 @@
 package com.cbt.game2048.view;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Point;
@@ -9,6 +10,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.GridLayout;
 
 import com.cbt.game2048.activity.MainActivity;
@@ -43,6 +46,9 @@ public class GameView extends GridLayout {
     private long startGameTime;
     private long finishGameTime;
 
+    private Context context;
+    private Animation loadAnimation;
+
     //向外部提供一个设置游戏状态监听的方法
     public void setOnGameChangeListener(OnGameChangeListener listener){
         this.listener = listener;
@@ -56,21 +62,16 @@ public class GameView extends GridLayout {
     }
 
     public GameView(Context context) {
-        super(context);
-        initGame();
-        sharedPreferencesUtil = SharedPreferencesUtil.getInstance(context);
+        this(context,null);
     }
 
     public GameView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initGame();
-        sharedPreferencesUtil = SharedPreferencesUtil.getInstance(context);
+        this(context, attrs,0);
     }
 
     public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initGame();
-        sharedPreferencesUtil = SharedPreferencesUtil.getInstance(context);
+        initGame(context);
     }
 
     //当本View宽高尺寸变化时被调用
@@ -136,7 +137,10 @@ public class GameView extends GridLayout {
     }
 
     //初始化游戏
-    public void initGame() {
+    public void initGame(Context context) {
+        this.context = context;
+        sharedPreferencesUtil = SharedPreferencesUtil.getInstance(context);
+
         //获取音效类
         sound = new Sound(getContext(), 10, AudioManager.STREAM_SYSTEM, 5, R.raw.impact);
 
@@ -214,6 +218,13 @@ public class GameView extends GridLayout {
         }
     }
 
+    private void setAnimation(Card card) {
+        if (loadAnimation == null) {
+            loadAnimation = AnimationUtils.loadAnimation(context, R.anim.scale);
+        }
+        card.startAnimation(loadAnimation);
+    }
+
     //根据不同的方向标签向处理不同的滑动方向
     private void swipeTo(int dir) {
         //记录本次滑动是否有合并的卡片
@@ -232,6 +243,7 @@ public class GameView extends GridLayout {
                                     x--;
                                 } else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
                                     cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
+                                    setAnimation(cardsMap[x][y]);
                                     cardsMap[x1][y].setNum(0);
                                     score += cardsMap[x][y].getNum();
                                     listener.onScoreChange(score);
@@ -258,6 +270,7 @@ public class GameView extends GridLayout {
                                     merge = true;
                                 } else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
                                     cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
+                                    setAnimation(cardsMap[x][y]);
                                     cardsMap[x1][y].setNum(0);
                                     score += cardsMap[x][y].getNum();
                                     listener.onScoreChange(score);
@@ -285,6 +298,7 @@ public class GameView extends GridLayout {
                                     merge = true;
                                 } else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
                                     cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
+                                    setAnimation(cardsMap[x][y]);
                                     cardsMap[x][y1].setNum(0);
                                     score += cardsMap[x][y].getNum();
                                     listener.onScoreChange(score);
@@ -312,6 +326,7 @@ public class GameView extends GridLayout {
                                     merge = true;
                                 } else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
                                     cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
+                                    setAnimation(cardsMap[x][y]);
                                     cardsMap[x][y1].setNum(0);
                                     score += cardsMap[x][y].getNum();
                                     listener.onScoreChange(score);
