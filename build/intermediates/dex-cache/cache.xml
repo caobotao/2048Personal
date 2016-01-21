@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1-a9e20ef72077586d8ff0a5bf99f287ea72dc19a0.jar" />
+    </item>
+    <item
+        jar="/Users/caobotao/AndroidStudioProjects/Game2048/app/libs/shimmer.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ebb284e30090c767e419d866e5c2cbe87e9cbaef">
+        <dex dex="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/pre-dexed/debug/shimmer-2675089e64b0d1a97ab2d1222ccb98be78f6a1e5.jar" />
+    </item>
+    <item
+        jar="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e1fa5e1123997a55e3ed65b44892993ff4b58cfe">
+        <dex dex="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/pre-dexed/debug/classes-214c5836e3662bebcc228bf66db9b8a7180a256f.jar" />
+    </item>
+    <item
+        jar="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/exploded-aar/com.cesarferreira.colorize/library/0.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="fdf1b03bc8924e571f50dbccf0e2bda7fad4041e">
+        <dex dex="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/pre-dexed/debug/classes-9a09f89cda1f1e44da97b7329c4234826fa950fa.jar" />
+    </item>
+    <item
+        jar="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/pre-dexed/debug/classes-8364e161f2694f5d4b2089d77821ba465f795856.jar" />
+    </item>
+    <item
+        jar="/Users/caobotao/Applications/AndroidSDK/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.1-507d6e676e07eff44c30337d0e3662a6e34628e1.jar" />
+    </item>
+    <item
+        jar="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="/Users/caobotao/AndroidStudioProjects/Game2048/app/build/intermediates/pre-dexed/debug/classes-10d817e9a327b03314a2af27e50249210dd9efc7.jar" />
+    </item>
+
+</items>

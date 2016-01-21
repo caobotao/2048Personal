@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Game2048</string>
+    <string name="score">分数:</string>
+    <string name="best">最高:</string>
+    <string name="no_game_history_yet">您还没有游戏记录!</string>
+    <string name="start_game">开始游戏</string>
+    <string name="startnewgame">开始新游戏</string>
+    <string name="scanhistory">查看记录</string>
+    <string name="quitgame">退出游戏</string>
+    <string name="_2048">2048</string>
+    <string name="switchsound">关闭音效</string>
+</resources>
