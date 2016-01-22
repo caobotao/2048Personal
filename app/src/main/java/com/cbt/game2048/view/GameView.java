@@ -1,5 +1,8 @@
 package com.cbt.game2048.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,8 +13,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.GridLayout;
 
 import com.cbt.game2048.activity.MainActivity;
@@ -134,6 +140,10 @@ public class GameView extends GridLayout {
         //设置此坐标对应的卡片按1:9的比例设置卡片上的数字为2或4
         cardsMap[point.x][point.y].setNum(Math.random() > 0.1 ? 2 : 4);
 
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setFillAfter(false);
+        cardsMap[point.x][point.y].startAnimation(scaleAnimation);
     }
 
     //初始化游戏
@@ -166,15 +176,15 @@ public class GameView extends GridLayout {
                         offsetX = event.getX() - startX;
                         offsetY = event.getY() - startY;
                         if (Math.abs(offsetX) > Math.abs(offsetY)) {
-                            if (offsetX < -5) {
+                            if (offsetX < -10) {
                                 swipeTo(SWIPE_TO_LEFT);
-                            } else if (offsetX > 5) {
+                            } else if (offsetX > 10) {
                                 swipeTo(SWIPE_TO_RIGHT);
                             }
                         } else {
-                            if (offsetY < -5) {
+                            if (offsetY < -10) {
                                 swipeTo(SWIPE_TO_UP);
-                            } else if (offsetY > 5) {
+                            } else if (offsetY > 10) {
                                 swipeTo(SWIPE_TO_DOWN);
                             }
                         }
@@ -225,6 +235,13 @@ public class GameView extends GridLayout {
         card.startAnimation(loadAnimation);
     }
 
+    private void setSlideAnimation(Card card,float fromXDelta, float toXDelta, float fromYDelta, float toYDelta) {
+        TranslateAnimation translateanimation = new TranslateAnimation(fromXDelta, toXDelta, fromYDelta, toYDelta);
+        translateanimation.setDuration(100);
+        translateanimation.setFillAfter(false);
+        card.startAnimation(translateanimation);
+    }
+
     //根据不同的方向标签向处理不同的滑动方向
     private void swipeTo(int dir) {
         //记录本次滑动是否有合并的卡片
@@ -239,12 +256,16 @@ public class GameView extends GridLayout {
                                 if (cardsMap[x][y].getNum() <= 0) {
                                     cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
                                     cardsMap[x1][y].setNum(0);
+                                    //设置滑动动画效果
+                                    setSlideAnimation(cardsMap[x1][y],0,-cardWidth,0,0);
                                     merge = true;
                                     x--;
                                 } else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
                                     cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
                                     setAnimation(cardsMap[x][y]);
                                     cardsMap[x1][y].setNum(0);
+                                    //设置滑动动画效果
+                                    setSlideAnimation(cardsMap[x1][y],0,-cardWidth,0,0);
                                     score += cardsMap[x][y].getNum();
                                     listener.onScoreChange(score);
                                     checkPlaySound();
@@ -263,15 +284,20 @@ public class GameView extends GridLayout {
                     for (int x = 3; x >= 0; x--) {
                         for (int x1 = x - 1; x1 >= 0; x1--) {
                             if (cardsMap[x1][y].getNum() > 0) {
+
                                 if (cardsMap[x][y].getNum() <= 0) {
                                     cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
                                     cardsMap[x1][y].setNum(0);
+                                    //设置滑动动画效果
+                                    setSlideAnimation(cardsMap[x1][y],0, cardWidth, 0, 0);
                                     x++;
                                     merge = true;
                                 } else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
                                     cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
                                     setAnimation(cardsMap[x][y]);
                                     cardsMap[x1][y].setNum(0);
+                                    //设置滑动动画效果
+                                    setSlideAnimation(cardsMap[x1][y],0, cardWidth, 0, 0);
                                     score += cardsMap[x][y].getNum();
                                     listener.onScoreChange(score);
                                     checkPlaySound();
@@ -294,9 +320,13 @@ public class GameView extends GridLayout {
                                 if (cardsMap[x][y].getNum() <= 0) {
                                     cardsMap[x][y].setNum(cardsMap[x][y1].getNum());
                                     cardsMap[x][y1].setNum(0);
+                                    //设置滑动动画效果
+                                    setSlideAnimation(cardsMap[x][y1],0, 0, 0, -cardWidth);
                                     y--;
                                     merge = true;
                                 } else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
+                                    //设置滑动动画效果
+                                    setSlideAnimation(cardsMap[x][y1],0, 0, 0, -cardWidth);
                                     cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
                                     setAnimation(cardsMap[x][y]);
                                     cardsMap[x][y1].setNum(0);
@@ -321,10 +351,14 @@ public class GameView extends GridLayout {
                             if (cardsMap[x][y1].getNum() > 0) {
                                 if (cardsMap[x][y].getNum() <= 0) {
                                     cardsMap[x][y].setNum(cardsMap[x][y1].getNum());
+                                    //设置滑动动画效果
+                                    setSlideAnimation(cardsMap[x][y1],0, 0, 0, cardWidth);
                                     cardsMap[x][y1].setNum(0);
                                     y++;
                                     merge = true;
                                 } else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
+                                    //设置滑动动画效果
+                                    setSlideAnimation(cardsMap[x][y1],0, 0, 0, cardWidth);
                                     cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
                                     setAnimation(cardsMap[x][y]);
                                     cardsMap[x][y1].setNum(0);
@@ -348,5 +382,7 @@ public class GameView extends GridLayout {
             checkFinishGame();//添加后检查游戏是否结束
         }
     }
+
+
 
 }
